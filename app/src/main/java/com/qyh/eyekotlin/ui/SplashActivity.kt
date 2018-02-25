@@ -1,4 +1,4 @@
-package com.qyh.eyekotlin
+package com.qyh.eyekotlin.ui
 
 import android.graphics.Typeface
 import android.support.v7.app.AppCompatActivity
@@ -9,7 +9,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.ScaleAnimation
-import com.qyh.eyekotlin.mvp.main.MainActivity
+import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.utils.newIntent
 import kotlinx.android.synthetic.main.activity_splash.*
 

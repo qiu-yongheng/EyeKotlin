@@ -27,7 +27,7 @@ abstract class BaseFragment : Fragment() {
         if (rootView == null) {
             rootView = inflater.inflate(getLayoutResources(), container, false)
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,15 +44,15 @@ abstract class BaseFragment : Fragment() {
         rootView ?: return
         if (!isFirst && isFragmentVisiable) {
             // 可见, 并且没有加载过
-            onFragmentVisiableChange(true)
+            onFragmentVisibleChange(true)
         } else if (isFragmentVisiable) {
             // 由可见 -> 不可见, 已经加载过
-            onFragmentVisiableChange(false)
+            onFragmentVisibleChange(false)
             isFragmentVisiable = false
         }
     }
 
-    open protected fun onFragmentVisiableChange(b: Boolean) {
+    open protected fun onFragmentVisibleChange(b: Boolean) {
 
     }
 

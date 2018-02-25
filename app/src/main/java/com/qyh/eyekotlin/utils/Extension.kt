@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.view.Gravity
 import android.widget.Toast
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * @author 邱永恒
@@ -34,6 +37,15 @@ inline fun <reified T: Activity> Activity.newIntent() {
     // T::class.java反射获取class对象
     val intent = Intent(this, T::class.java)
     startActivity(intent)
+}
+
+/**
+ * RxJava扩展线程调度
+ */
+fun <T> Observable<T>.applySchedulers(): Observable<T> {
+    return subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 }
 
 

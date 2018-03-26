@@ -23,12 +23,11 @@ import java.util.*
  *
  * @time 2018/2/16  15:38
  *
- * @desc ${TODO}
+ * @desc 初始化RadioButton, 加载fragment,
  *
  */
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-
     var homeFragment: HomeFragment? = null
     var findFragment: FindFragment? = null
     var hotFragment: HotFragment? = null
@@ -49,6 +48,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val window = window
         // 获取当前屏幕的参数
         val params = window.attributes
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        window.attributes = params
 
         setRadioButton()
         initToolbar()
@@ -129,6 +130,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         rb_mine.setOnClickListener(this)
     }
 
+    /**
+     * 根据radio的点击事件, 显示相应的fragment
+     */
     override fun onClick(v: View?) {
         clearState()
         when (v?.id) {

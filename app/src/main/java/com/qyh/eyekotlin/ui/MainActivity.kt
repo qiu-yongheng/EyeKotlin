@@ -23,12 +23,10 @@ import java.util.*
  *
  * @time 2018/2/16  15:38
  *
- * @desc ${TODO}
+ * @desc 初始化RadioButton, 加载fragment,
  *
  */
-
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-
     var homeFragment: HomeFragment? = null
     var findFragment: FindFragment? = null
     var hotFragment: HotFragment? = null
@@ -44,11 +42,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         // 沉浸式状态栏(调用java代码)
         ImmersionBar.with(this).transparentBar().barAlpha(0.3f).fitsSystemWindows(true).init()
-
-        // 获取当前屏幕的窗口, 当Activity不可见时, 为null
-        val window = window
-        // 获取当前屏幕的参数
-        val params = window.attributes
+        // 隐藏导航栏
+        window.attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
         setRadioButton()
         initToolbar()
@@ -66,7 +61,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             } else {
                 // 点击搜索
                 searchFragment = SearchFragment()
-                // SearchFragment继承DialogFragment
+                // SearchFragment继承DialogFragment, 像使用dialog一样使用fragment
                 searchFragment.show(supportFragmentManager, SEARCH_TAG)
             }
         }
@@ -129,6 +124,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         rb_mine.setOnClickListener(this)
     }
 
+    /**
+     * 根据radio的点击事件, 显示相应的fragment
+     */
     override fun onClick(v: View?) {
         clearState()
         when (v?.id) {

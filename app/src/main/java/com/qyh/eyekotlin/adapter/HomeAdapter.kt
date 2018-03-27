@@ -28,16 +28,16 @@ import com.qyh.eyekotlin.utils.SPUtils
  *
  */
 class HomeAdapter(private var context: Context, private var list: ArrayList<HomeBean.IssueListBean.ItemListBean>) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+        return HomeViewHolder(inflater.inflate(R.layout.item_home, parent, false), context)
+    }
+
     private var inflater = LayoutInflater.from(context)
     override fun getItemCount(): Int {
         return list.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): HomeViewHolder {
-        return HomeViewHolder(inflater.inflate(R.layout.item_home, parent, false), context)
-    }
-
-    override fun onBindViewHolder(holder: HomeViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val bean = list[position]
         val title = bean.data?.title // 标题
         val category = bean.data?.category // 类别

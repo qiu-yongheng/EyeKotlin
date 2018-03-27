@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Parcelable
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.model.bean.HomeBean
+import com.qyh.eyekotlin.model.bean.VideoBean
+import com.qyh.eyekotlin.ui.VideoDetailActivity
 import com.qyh.eyekotlin.utils.ImageLoadUtils
+import com.qyh.eyekotlin.utils.ObjectSaveUtils
+import com.qyh.eyekotlin.utils.SPUtils
 
 /**
  * @author 邱永恒
@@ -65,29 +70,28 @@ class HomeAdapter(private var context: Context, private var list: ArrayList<Home
         holder.itemView?.setOnClickListener {
             //跳转视频详情页
             val intent: Intent = Intent(context, VideoDetailActivity::class.java)
-            val desc = bean?.data?.description
-            val duration = bean?.data?.duration
-            val playUrl = bean?.data?.playUrl
-            val blurred = bean?.data?.cover?.blurred
-            val collect = bean?.data?.consumption?.collectionCount
-            val share = bean?.data?.consumption?.shareCount
-            val reply = bean?.data?.consumption?.replyCount
+            val desc = bean.data?.description
+            val duration = bean.data?.duration
+            val playUrl = bean.data?.playUrl
+            val blurred = bean.data?.cover?.blurred
+            val collect = bean.data?.consumption?.collectionCount
+            val share = bean.data?.consumption?.shareCount
+            val reply = bean.data?.consumption?.replyCount
             val time = System.currentTimeMillis()
             val videoBean = VideoBean(photo, title, desc, duration, playUrl, category, blurred, collect, share, reply, time)
-            val url = SPUtils.getInstance(context!!, "beans").getString(playUrl!!)
-            if (url.equals("")) {
-                var count = SPUtils.getInstance(context!!, "beans").getInt("count")
-                if (count != -1) {
-                    count = count.inc()
+            val url = SPUtils.getInstance(context, "beans").getString(playUrl!!)
+            if (TextUtils.isEmpty(url)) {
+                var count = SPUtils.getInstance(context, "beans").getInt("count")
+                count = if (count != -1) {
+                    count.inc()
                 } else {
-                    count = 1
+                    1
                 }
-                SPUtils.getInstance(context!!, "beans").put("count", count)
-                SPUtils.getInstance(context!!, "beans").put(playUrl!!, playUrl)
-                ObjectSaveUtils.saveObject(context!!, "bean$count", videoBean)
+                SPUtils.getInstance(context, "beans").put("count", count)
+                SPUtils.getInstance(context, "beans").put(playUrl, playUrl)
+                ObjectSaveUtils.saveObject(context, "bean$count", videoBean)
             }
             intent.putExtra("data", videoBean as Parcelable)
-            context?.let { context -> context.startActivity(intent) }
             context.startActivity(intent)
         }
     }

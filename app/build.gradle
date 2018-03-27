@@ -53,4 +53,6 @@ dependencies {
     compile 'com.google.android:flexbox:0.3.2'
     // 沉浸式状态栏
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'
+    // 视屏播放
+    compile 'com.shuyu:GSYVideoPlayer:4.0.0-beat1'
 }

@@ -23,7 +23,7 @@ import java.util.*
  *
  * @time 2018/2/16  15:38
  *
- * @desc 初始化RadioButton, 加载fragment,
+ * @desc 初始化RadioButton, 加载fragment
  *
  */
 class MainActivity : AppCompatActivity(), View.OnClickListener {

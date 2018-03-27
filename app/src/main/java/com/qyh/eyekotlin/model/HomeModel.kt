@@ -15,9 +15,8 @@ import io.reactivex.Observable
  *
  */
 class HomeModel {
-    fun loadData(context: Context, isFirst: Boolean, data: String): Observable<HomeBean> {
-        val retrofitClient = RetrofitClient.getInstance(context, ApiService.BASE_URL)
-        val apiService = retrofitClient.create(ApiService::class.java)
+    fun loadData(isFirst: Boolean, data: String): Observable<HomeBean> {
+        val apiService = RetrofitClient.instance!!.create(ApiService::class.java)
         return when (isFirst) {
             true -> apiService.getHomeData()
             false -> apiService.getHomeMoreData(data, "2")

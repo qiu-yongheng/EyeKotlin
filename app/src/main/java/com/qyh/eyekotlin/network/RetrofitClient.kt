@@ -17,30 +17,25 @@ import java.util.concurrent.TimeUnit
  *
  * @time 2018/2/25  13:57
  *
- * @desc ${TODD}
+ * @desc 获取Retrofit客户端, 单例模式
  *
  */
-class RetrofitClient private constructor(var context: Context, var baseUrl: String){
-    var httpCacheDirectory: File? = null
-    var cache: Cache? = null
-    var okhttpClient: OkHttpClient? = null
-    var retrofit: Retrofit? = null
-    val DEFAULT_TIMEOUT: Long = 20
-
-    init {
-        // 缓存地址
-        if (httpCacheDirectory == null) {
-            httpCacheDirectory = File(context.cacheDir, "app_cache")
-        }
-        try {
-            if (cache == null) {
-                cache = Cache(httpCacheDirectory, 10 * 1024 * 1024)
-            }
-        } catch (e: Exception) {
-            Log.e("OKHttp", "Could not create http cache", e)
-        }
-
-        okhttpClient = OkHttpClient.Builder()
+class RetrofitClient private constructor(context: Context, baseUrl: String) {
+    /**
+     * 缓存地址
+     */
+    private val httpCacheDirectory: File by lazy { File(context.cacheDir, "app_cache") }
+    private val cache: Cache by lazy { Cache(httpCacheDirectory, 10 * 1024 * 1024) }
+    /**
+     * 创建OKHTTP客户端
+     * 1. 设置在线缓存路径
+     * 2. 添加请求日志拦截
+     * 3. 添加在线缓存拦截
+     * 4. 设置连接超时
+     * 5. 设置写超时
+     */
+    private val okhttpClient: OkHttpClient by lazy {
+        OkHttpClient.Builder()
                 .cache(cache)
                 .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addNetworkInterceptor(CacheInterceptor(context))
@@ -48,19 +43,27 @@ class RetrofitClient private constructor(var context: Context, var baseUrl: Stri
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .build()
-
-        retrofit = Retrofit.Builder()
+    }
+    /**
+     * 创建Retrofit客户端
+     */
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
                 .client(okhttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(baseUrl)
                 .build()
     }
+    /**
+     * 连接超时时间(秒)
+     */
+    private val DEFAULT_TIMEOUT: Long = 20
 
     companion object {
-        private var instance: RetrofitClient? = null
+        var instance: RetrofitClient? = null
 
-        fun getInstance(context: Context, baseUrl: String) : RetrofitClient {
+        fun init(context: Context, baseUrl: String) {
             if (instance == null) {
                 synchronized(RetrofitClient::class) {
                     if (instance == null) {
@@ -68,12 +71,11 @@ class RetrofitClient private constructor(var context: Context, var baseUrl: Stri
                     }
                 }
             }
-            return instance!!
         }
     }
 
     fun <T> create(service: Class<T>): T {
-        return retrofit?.create(service)!!
+        return retrofit.create(service)
     }
 
 }

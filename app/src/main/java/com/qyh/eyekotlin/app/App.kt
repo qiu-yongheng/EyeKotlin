@@ -1,6 +1,8 @@
 package com.qyh.eyekotlin.app
 
 import android.app.Application
+import com.qyh.eyekotlin.network.RetrofitClient
+import com.qyh.eyekotlin.network.api.ApiService
 import zlc.season.rxdownload3.core.DownloadConfig
 import zlc.season.rxdownload3.extension.ApkInstallExtension
 import zlc.season.rxdownload3.http.OkHttpClientFactoryImpl
@@ -18,14 +20,32 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        initDownload()
+        initRetrofit()
+
+    }
+
+    private fun initDownload() {
         DownloadConfig.Builder.create(this)
-                .setFps(20)                         //设置更新频率
-                .enableAutoStart(true)              //自动开始下载
-                .enableDb(true)                             //启用数据库
-                .enableService(true)                        //启用Service
-                .enableNotification(true)                   //启用Notification
-                .setNotificationFactory(NotificationFactoryImpl()) 	    //自定义通知
-                .setOkHttpClientFacotry(OkHttpClientFactoryImpl()) 	    //自定义OKHTTP
-                .addExtension(ApkInstallExtension::class.java)          //添加扩展
+                //设置更新频率
+                .setFps(20)
+                //自动开始下载
+                .enableAutoStart(true)
+                //启用数据库
+                .enableDb(true)
+                //启用Service
+                .enableService(true)
+                //启用Notification
+                .enableNotification(true)
+                //自定义通知
+                .setNotificationFactory(NotificationFactoryImpl())
+                //自定义OKHTTP
+                .setOkHttpClientFacotry(OkHttpClientFactoryImpl())
+                //添加扩展
+                .addExtension(ApkInstallExtension::class.java)
+    }
+
+    private fun initRetrofit() {
+        RetrofitClient.init(this, ApiService.BASE_URL)
     }
 }

@@ -24,7 +24,7 @@ class HomePresenter(private var context: Context, var view: HomeContract.View) :
      * 刷新数据
      */
     override fun requestData() {
-        model.loadData(context, true, "0").applySchedulers().subscribe ({homeBean ->
+        model.loadData(true, "0").applySchedulers().subscribe ({homeBean ->
             view.setData(homeBean)
         })
     }
@@ -33,7 +33,7 @@ class HomePresenter(private var context: Context, var view: HomeContract.View) :
      * 加载更多
      */
     fun moreData(data: String) {
-        model.loadData(context, false, data).applySchedulers().subscribe({homeBean ->
+        model.loadData(false, data).applySchedulers().subscribe({homeBean ->
             view.setData(homeBean)
         })
     }

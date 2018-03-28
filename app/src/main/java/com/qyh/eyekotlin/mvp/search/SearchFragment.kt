@@ -6,8 +6,13 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.text.TextUtils
 import android.view.*
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.qyh.eyekotlin.R
+import com.qyh.eyekotlin.adapter.HotAdapter
+import com.qyh.eyekotlin.mvp.search.result.ResultActivity
+import com.qyh.eyekotlin.mvp.search.result.ResultActivity.Companion.RESULT_QUERY
 import com.qyh.eyekotlin.utils.KeyBoardUtils
+import com.qyh.eyekotlin.utils.newIntent
 import com.qyh.eyekotlin.utils.showToast
 import com.qyh.eyekotlin.view.CircularRevealAnim
 import kotlinx.android.synthetic.main.fragment_show.*
@@ -23,7 +28,24 @@ import kotlinx.android.synthetic.main.fragment_show.*
 const val SEARCH_TAG = "SearchFragment"
 
 class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, DialogInterface.OnKeyListener, ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
+    /**
+     * 根布局
+     */
     private lateinit var rootView: View
+    /**
+     * 搜索热词
+     */
+    private val hotList by lazy {
+        arrayListOf("永恒", "脱口秀", "城会玩", "666", "笑cry", "漫威",
+                "清新", "匠心", "VR", "心理学", "舞蹈", "品牌广告", "粉丝自制", "电影相关", "萝莉", "魔性"
+                , "第一视角", "教程", "毕业设计", "奥斯卡", "燃", "冰与火之歌", "温情", "线下campaign", "公益")
+    }
+    private val adapter by lazy { HotAdapter(R.layout.item_hot, hotList) }
+    /**
+     *
+     */
+    private lateinit var mCircularRevealAnim: CircularRevealAnim
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 设置dialog主题, 可以全屏显示
@@ -43,9 +65,9 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, Dialog
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initListener()
     }
 
-    private lateinit var mCircularRevealAnim: CircularRevealAnim
 
     private fun initView() {
         // 设置字体
@@ -57,6 +79,19 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, Dialog
         iv_search_search.viewTreeObserver.addOnPreDrawListener(this)
         iv_search_search.setOnClickListener(this)
         iv_search_back.setOnClickListener(this)
+
+        recycler_view.layoutManager = FlexboxLayoutManager(context)
+        recycler_view.adapter = adapter
+    }
+
+    private fun initListener() {
+        adapter.setOnItemClickListener { adapter, view, position ->
+            val keyWord = this.adapter.data[position]
+            val bundle = Bundle()
+            bundle.putString(RESULT_QUERY, keyWord)
+            activity?.newIntent<ResultActivity>(bundle)
+            hideAnim()
+        }
     }
 
     /**
@@ -103,6 +138,9 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, Dialog
         } else {
             hideAnim()
             val keyWord = et_search_keyword.text.toString().trim()
+            val bundle = Bundle()
+            bundle.putString(RESULT_QUERY, keyWord)
+            activity?.newIntent<ResultActivity>(bundle)
         }
     }
 

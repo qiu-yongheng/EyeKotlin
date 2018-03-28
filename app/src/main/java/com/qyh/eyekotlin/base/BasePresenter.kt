@@ -10,4 +10,5 @@ package com.qyh.eyekotlin.base
  */
 interface BasePresenter {
     fun start()
+    fun unSubscribe()
 }

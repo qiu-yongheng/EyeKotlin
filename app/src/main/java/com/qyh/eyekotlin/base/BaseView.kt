@@ -8,4 +8,6 @@ package com.qyh.eyekotlin.base
  * @desc ${TODD}
  *
  */
-interface BaseView<in T>
+interface BaseView<in T> {
+    fun showError(error: String)
+}

@@ -9,7 +9,7 @@ import java.io.Serializable
  *
  * @time 2018/2/26  8:49
  *
- * @desc ${TODD}
+ * @desc 首页视频详情数据类
  *
  */
 data class VideoBean(var feed: String?, var title: String?,

@@ -8,6 +8,7 @@ import com.qyh.eyekotlin.adapter.HomeAdapter
 import com.qyh.eyekotlin.base.BaseFragment
 import com.qyh.eyekotlin.model.bean.HomeBean
 import com.qyh.eyekotlin.model.bean.HomeBean.IssueListBean.ItemListBean
+import com.qyh.eyekotlin.utils.showToast
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.regex.Pattern
 
@@ -20,6 +21,10 @@ import java.util.regex.Pattern
  *
  */
 class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRefreshListener {
+    override fun showError(error: String) {
+        context?.showToast(error)
+    }
+
     var isRefresh: Boolean = false
     lateinit var presenter: HomePresenter
     var list = ArrayList<ItemListBean>()

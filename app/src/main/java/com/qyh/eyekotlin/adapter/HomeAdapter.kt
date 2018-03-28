@@ -14,7 +14,7 @@ import android.widget.TextView
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.model.bean.HomeBean
 import com.qyh.eyekotlin.model.bean.VideoBean
-import com.qyh.eyekotlin.ui.VideoDetailActivity
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailActivity
 import com.qyh.eyekotlin.utils.ImageLoadUtils
 import com.qyh.eyekotlin.utils.ObjectSaveUtils
 import com.qyh.eyekotlin.utils.SPUtils

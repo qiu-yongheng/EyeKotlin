@@ -1,13 +1,13 @@
 package com.qyh.eyekotlin.utils
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.FutureTarget
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.glide.GlideApp
-import java.io.File
 
 /**
  * @author 邱永恒
@@ -19,6 +19,9 @@ import java.io.File
  */
 class ImageLoadUtils {
     companion object {
+        /**
+         * 显示图片
+         */
         fun display(context: Context, imageView: ImageView, url: String) {
             GlideApp.with(context)
                     .load(url)
@@ -41,10 +44,13 @@ class ImageLoadUtils {
                     .into(imageView)
         }
 
-        fun downloadOnly(context: Context, url: String, width: Int, height: Int): FutureTarget<File>? {
+        /**
+         * 下载图片
+         */
+        fun downloadOnly(context: Context, url: String, width: Int, height: Int): FutureTarget<Drawable> {
             return GlideApp.with(context)
                     .load(url)
-                    .downloadOnly(width, height)
-        }
+                    .submit(width, height)
+    }
     }
 }

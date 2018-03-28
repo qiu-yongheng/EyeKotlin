@@ -2,12 +2,11 @@ package com.qyh.eyekotlin.ui
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
-import com.gyf.barlibrary.ImmersionBar
 import com.qyh.eyekotlin.R
+import com.qyh.eyekotlin.base.BaseActivity
 import com.qyh.eyekotlin.mvp.find.FindFragment
 import com.qyh.eyekotlin.mvp.home.HomeFragment
 import com.qyh.eyekotlin.mvp.hot.HotFragment
@@ -26,7 +25,7 @@ import java.util.*
  * @desc 初始化RadioButton, 加载fragment
  *
  */
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : BaseActivity(), View.OnClickListener {
     var homeFragment: HomeFragment? = null
     var findFragment: FindFragment? = null
     var hotFragment: HotFragment? = null
@@ -40,10 +39,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 沉浸式状态栏(调用java代码)
-        ImmersionBar.with(this).transparentBar().barAlpha(0.3f).fitsSystemWindows(true).init()
-        // 隐藏导航栏
-        window.attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//        // 沉浸式状态栏(调用java代码)
+//        ImmersionBar.with(this).transparentBar().barAlpha(0.3f).fitsSystemWindows(true).init()
+//        // 隐藏导航栏
+//        window.attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
         setRadioButton()
         initToolbar()

@@ -5,7 +5,7 @@ package com.qyh.eyekotlin.model.bean
  *
  * @time 2018/2/25  11:19
  *
- * @desc ${TODD}
+ * @desc 首页数据类
  *
  */
 data class HomeBean(var nextPageUrl: String?, var nextPublishTime: Long,

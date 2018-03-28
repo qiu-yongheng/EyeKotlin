@@ -24,8 +24,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"/>
-        <activity android:name=".ui.VideoDetailActivity"/>
+        <activity
+            android:name=".ui.MainActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".mvp.videodetail.VideoDetailActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".mvp.search.result.ResultActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

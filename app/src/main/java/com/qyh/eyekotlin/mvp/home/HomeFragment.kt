@@ -1,13 +1,20 @@
 package com.qyh.eyekotlin.mvp.home
 
+import android.content.ClipData.newIntent
+import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.qyh.eyekotlin.R
+import com.qyh.eyekotlin.adapter.Ho
 import com.qyh.eyekotlin.adapter.HomeAdapter
 import com.qyh.eyekotlin.base.BaseFragment
 import com.qyh.eyekotlin.model.bean.HomeBean
 import com.qyh.eyekotlin.model.bean.HomeBean.IssueListBean.ItemListBean
+import com.qyh.eyekotlin.model.bean.VideoBean
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailActivity
+import com.qyh.eyekotlin.utils.newIntent
+import com.qyh.eyekotlin.utils.savePlayUrl
 import com.qyh.eyekotlin.utils.showToast
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.regex.Pattern
@@ -27,8 +34,8 @@ class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRef
 
     var isRefresh: Boolean = false
     lateinit var presenter: HomePresenter
-    var list = ArrayList<ItemListBean>()
-    lateinit var adapter: HomeAdapter
+    private val list by lazy { ArrayList<ItemListBean>() }
+    private val adapter by lazy { HomeAdapter(R.layout.item_home, list) }
     lateinit var data: String
 
     override fun getLayoutResources(): Int {
@@ -69,7 +76,6 @@ class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRef
 
         // 初始化recyclerView
         recycler_view.layoutManager = LinearLayoutManager(context)
-        adapter = HomeAdapter(context!!, list)
         recycler_view.adapter = adapter
         // 初始化SwipeRefreshLayout
         refreshLayout.setOnRefreshListener(this)
@@ -84,6 +90,14 @@ class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRef
                 }
             }
         })
+        adapter.setOnItemClickListener { adapter, view, position ->
+            val item = this.adapter.data[position]
+            val videoBean = VideoBean(item.data?.cover?.feed, item.data?.title, item.data?.description, item.data?.duration, item.data?.playUrl, item.data?.category, item.data?.cover?.blurred, item.data?.consumption?.collectionCount, item.data?.consumption?.shareCount, item.data?.consumption?.replyCount, System.currentTimeMillis())
+            context?.savePlayUrl(videoBean)
+            val bundle = Bundle()
+            bundle.putParcelable(VideoDetailActivity.VIDEO_DATA, videoBean)
+            activity?.newIntent<VideoDetailActivity>(bundle)
+        }
     }
 
     override fun onRefresh() {

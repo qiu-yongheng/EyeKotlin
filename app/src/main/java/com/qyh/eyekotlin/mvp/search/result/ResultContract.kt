@@ -12,7 +12,7 @@ import com.qyh.eyekotlin.model.bean.HotBean
  * @desc ${TODD}
  *
  */
-class ResultContract {
+interface ResultContract {
     interface View : BaseView<Presenter> {
         fun setData(bean: HotBean)
     }

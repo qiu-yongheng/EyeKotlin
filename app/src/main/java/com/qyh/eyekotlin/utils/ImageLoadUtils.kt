@@ -47,10 +47,10 @@ class ImageLoadUtils {
         /**
          * 下载图片
          */
-        fun downloadOnly(context: Context, url: String, width: Int, height: Int): FutureTarget<Drawable> {
+        fun downloadOnly(context: Context, url: String): FutureTarget<Drawable> {
             return GlideApp.with(context)
                     .load(url)
-                    .submit(width, height)
-    }
+                    .submit()
+        }
     }
 }

@@ -62,7 +62,7 @@ fun <T> Observable<T>.applySchedulers(): Observable<T> {
 }
 
 /**
- * 缓存播放bean
+ * 缓存播放记录
  */
 fun Context.savePlayUrl(item: VideoBean) {
     val url = SPUtils.getInstance(this, "beans").getString(item.playUrl!!)

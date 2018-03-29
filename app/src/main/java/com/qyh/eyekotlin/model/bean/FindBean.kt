@@ -10,4 +10,5 @@ package com.qyh.eyekotlin.model.bean
  */
 
 class FindBean {
+
 }

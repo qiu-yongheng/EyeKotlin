@@ -1,18 +1,21 @@
 package com.qyh.eyekotlin.mvp.videodetail
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.qyh.eyekotlin.R
-import com.qyh.eyekotlin.base.BaseActivity
 import com.qyh.eyekotlin.model.bean.VideoBean
 import com.qyh.eyekotlin.utils.*
+import com.shuyu.gsyvideoplayer.GSYVideoManager
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_video_detail.*
 import zlc.season.rxdownload3.RxDownload
 import java.lang.ref.WeakReference
@@ -26,7 +29,7 @@ import java.lang.ref.WeakReference
  *
  */
 
-class VideoDetailActivity : BaseActivity() {
+class VideoDetailActivity : AppCompatActivity() {
     companion object {
         val MSG_IMAGE_LOADED = 101
         const val VIDEO_DATA = "video_data"
@@ -47,9 +50,10 @@ class VideoDetailActivity : BaseActivity() {
      */
     private val imageView by lazy { ImageView(this) }
     /**
-     * 屏幕旋转工具类
+     * 设置旋转
      */
-    private val orientationUtils by lazy { OrientationUtils(this, gsy_player) }
+    private lateinit var orientationUtils: OrientationUtils
+    private var isPlay = false
 
     private val handler = Handler(Handler.Callback { msg ->
         when (msg?.what) {
@@ -99,9 +103,11 @@ class VideoDetailActivity : BaseActivity() {
      * 添加下载任务
      */
     private fun addMission(playUrl: String?) {
-        RxDownload.start(playUrl!!)
+        RxDownload.create(playUrl!!)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { success ->
+                            RxDownload.start(playUrl).subscribe()
                             // 下载成功, 缓存视频链接, 用来判断是否下载过
                             SPUtils.getInstance(this, "downloads").put(playUrl, playUrl)
                             SPUtils.getInstance(this, "download_state").put(playUrl, true)
@@ -117,40 +123,85 @@ class VideoDetailActivity : BaseActivity() {
     private fun prepareVideo() {
         if (TextUtils.isEmpty(localPath)) {
             // 在线播放
-            gsy_player.setUp(videoBean.playUrl, false, null, null)
+            gsy_player.setUp(videoBean.playUrl, false, null, videoBean.title)
         } else {
             // 播放缓存
-            Log.d(TAG, "离线缓存路径: $localPath")
-            gsy_player.setUp(localPath, false, null, null)
+            //Log.d(TAG, "离线缓存路径: $localPath")
+            gsy_player.setUp(localPath, false, null, videoBean.title)
         }
 
         // 封面图片
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         ImageViewAsyncTask(handler, WeakReference(this), WeakReference(imageView)).execute(videoBean.feed)
-
-        gsy_player.titleTextView.visibility = View.GONE
+        // 显示标题
+        gsy_player.titleTextView.visibility = View.VISIBLE
+        // 设置返回键
         gsy_player.backButton.visibility = View.VISIBLE
+        // 设置旋转
+        orientationUtils = OrientationUtils(this, gsy_player)
+        //初始化不打开外部的旋转
+        orientationUtils.isEnable = false
+        // 是否可以滑动调整
         gsy_player.setIsTouchWiget(true)
-
         //关闭自动旋转
         gsy_player.isRotateViewAuto = false
         gsy_player.isLockLand = false
         gsy_player.isShowFullAnimation = false
         gsy_player.isNeedLockFull = true
+        // 设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
         gsy_player.fullscreenButton.setOnClickListener {
-            //直接横屏
             orientationUtils.resolveByClick()
-            // 第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
             gsy_player.startWindowFullscreen(this, true, true)
         }
+        gsy_player.setVideoAllCallBack(object : GSYSampleCallBack() {
+            override fun onPrepared(url: String?, vararg objects: Any?) {
+                super.onPrepared(url, *objects)
+                //开始播放了才能旋转和全屏
+                orientationUtils.isEnable = true
+                isPlay = true
+            }
 
-        gsy_player.backButton.setOnClickListener {
-            onBackPressed()
+            override fun onQuitFullscreen(url: String?, vararg objects: Any?) {
+                super.onQuitFullscreen(url, *objects)
+                orientationUtils.backToProtVideo()
+            }
+        })
+        gsy_player.setLockClickListener { view, lock ->
+            // 配合下方的onConfigurationChanged
+            orientationUtils.isEnable = !lock
+        }
+        // 设置返回键功能
+        gsy_player.backButton.setOnClickListener { onBackPressed() }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        gsy_player.onVideoPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        gsy_player.onVideoResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        orientationUtils.releaseListener()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        //如果旋转了就全屏
+        if (isPlay) {
+            gsy_player.onConfigurationChanged(this, newConfig, orientationUtils, true, true)
         }
     }
 
     override fun onBackPressed() {
         orientationUtils.backToProtVideo()
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return
+        }
         super.onBackPressed()
     }
 

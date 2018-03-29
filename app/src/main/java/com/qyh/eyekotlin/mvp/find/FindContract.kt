@@ -15,7 +15,7 @@ import com.qyh.eyekotlin.model.bean.FindBean
 
 interface FindContract {
     interface View : BaseView<Presenter> {
-        fun setData(beans : MutableList<FindBean>)
+        fun setData(beans : ArrayList<FindBean>)
     }
 
     interface Presenter : BasePresenter {

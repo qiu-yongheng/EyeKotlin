@@ -5,10 +5,17 @@ package com.qyh.eyekotlin.model.bean
  *
  * @time 2018/3/28  22:39
  *
- * @desc ${TODO}
+ * @desc 发现
  *
  */
 
-class FindBean {
-
-}
+data class FindBean(
+		val id: Int,
+		val name: String,
+		val alias: Any,
+		val description: String,
+		val bgPicture: String,
+		val bgColor: String,
+		val headerImage: String,
+		val defaultAuthorId: Int
+)

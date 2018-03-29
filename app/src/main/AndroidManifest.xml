@@ -29,9 +29,15 @@
             android:launchMode="singleTask"/>
         <activity
             android:name=".mvp.videodetail.VideoDetailActivity"
-            android:launchMode="singleTask"/>
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Video"/>
         <activity
             android:name=".mvp.search.result.ResultActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".mvp.find.detail.FindDetailActivity"
             android:launchMode="singleTask"/>
     </application>
 

@@ -1,12 +1,10 @@
 package com.qyh.eyekotlin.mvp.home
 
-import android.content.ClipData.newIntent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.qyh.eyekotlin.R
-import com.qyh.eyekotlin.adapter.Ho
 import com.qyh.eyekotlin.adapter.HomeAdapter
 import com.qyh.eyekotlin.base.BaseFragment
 import com.qyh.eyekotlin.model.bean.HomeBean

@@ -2,6 +2,7 @@ package com.qyh.eyekotlin.mvp.find
 
 import com.qyh.eyekotlin.base.BasePresenter
 import com.qyh.eyekotlin.base.BaseView
+import com.qyh.eyekotlin.model.bean.FindBean
 
 /**
  * @author 邱永恒
@@ -14,7 +15,7 @@ import com.qyh.eyekotlin.base.BaseView
 
 interface FindContract {
     interface View : BaseView<Presenter> {
-        fun setData(beans : MutableList<FindBean>)
+        fun setData(beans : ArrayList<FindBean>)
     }
 
     interface Presenter : BasePresenter {

@@ -24,8 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!--<activity-->
+            <!--android:name=".ui.SplashActivity"-->
+            <!--android:launchMode="singleTask"/>-->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.Main"
             android:launchMode="singleTask"/>
         <activity
             android:name=".mvp.videodetail.VideoDetailActivity"

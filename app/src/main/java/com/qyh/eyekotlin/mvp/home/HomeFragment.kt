@@ -35,6 +35,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRef
     private val list by lazy { ArrayList<ItemListBean>() }
     private val adapter by lazy { HomeAdapter(R.layout.item_home, list) }
     lateinit var data: String
+    private var isSlidingToLast = false
 
     override fun getLayoutResources(): Int {
         return R.layout.fragment_home
@@ -61,7 +62,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRef
 
         // !!: 如果为空, 抛出空指针异常
         bean.issueList!!
-                .flatMap { it.itemList!!}
+                .flatMap { it.itemList!! }
                 .filter { it.type.equals("video") }
                 .forEach { list.add(it) }
         adapter.notifyDataSetChanged()
@@ -81,11 +82,24 @@ class HomeFragment : BaseFragment(), HomeContract.View, SwipeRefreshLayout.OnRef
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                val layoutManager: LinearLayoutManager = recyclerView?.layoutManager as LinearLayoutManager
-                val lastPosition = layoutManager.findLastVisibleItemPosition()
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastPosition == list.size - 1) {
-                    presenter.moreData(data)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取布局管理器
+                    val manager = recyclerView?.layoutManager as LinearLayoutManager
+                    // 获取最后一个完全显示的item position
+                    val lastVisibleItem = manager.findLastCompletelyVisibleItemPosition()
+                    // 获取当前显示的item的数量
+                    val totalItemCount = manager.itemCount
+
+                    // 判断是否滚动到底部并且是向下滑动
+                    if (lastVisibleItem == totalItemCount - 1 && isSlidingToLast) {
+                        presenter.moreData(data)
+                    }
                 }
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                isSlidingToLast = dy > 0
             }
         })
         adapter.setOnItemClickListener { adapter, view, position ->

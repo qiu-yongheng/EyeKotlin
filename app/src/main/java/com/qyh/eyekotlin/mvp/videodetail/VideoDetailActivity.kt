@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.model.bean.VideoBean
 import com.qyh.eyekotlin.utils.*
+import com.qyh.eyekotlin.utils.helper.PermissionHelper
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
@@ -103,18 +105,27 @@ class VideoDetailActivity : AppCompatActivity() {
      * 添加下载任务
      */
     private fun addMission(playUrl: String?) {
-        RxDownload.create(playUrl!!)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { success ->
-                            RxDownload.start(playUrl).subscribe()
-                            // 下载成功, 缓存视频链接, 用来判断是否下载过
-                            SPUtils.getInstance(this, "downloads").put(playUrl, playUrl)
-                            SPUtils.getInstance(this, "download_state").put(playUrl, true)
-                        },
-                        { error ->
-                            showToast("下载失败, 请重试: $error")
-                        })
+        PermissionHelper.requestStorage(object : PermissionHelper.OnPermissionGrantedListener {
+            override fun onPermissionGranted() {
+                RxDownload.create(playUrl!!)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                { status ->
+                                    Log.d("下载进度", "下载进度: ${status.percent()}")
+                                },
+                                { error ->
+                                    error.printStackTrace()
+                                    Log.d("下载失败", "下载失败")
+                                    showToast("下载失败, 请重试")
+                                },
+                                {
+                                    // 下载成功, 缓存视频链接, 用来判断是否下载过
+                                    SPUtils.getInstance(this@VideoDetailActivity, "downloads").put(playUrl, playUrl)
+                                    SPUtils.getInstance(this@VideoDetailActivity, "download_state").put(playUrl, true)
+                                })
+                RxDownload.start(playUrl).subscribe()
+            }
+        })
     }
 
     /**

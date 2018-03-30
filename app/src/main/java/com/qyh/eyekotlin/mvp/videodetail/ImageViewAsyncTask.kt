@@ -23,6 +23,7 @@ class ImageViewAsyncTask(val handler: Handler, val activity: WeakReference<Video
      */
     override fun doInBackground(vararg params: String?): Drawable {
         val futureTarget = ImageLoadUtils.downloadOnly(activity.get()!!, params[0]!!)
+
         return futureTarget.get()
     }
 

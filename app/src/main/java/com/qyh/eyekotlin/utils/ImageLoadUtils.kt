@@ -2,6 +2,7 @@ package com.qyh.eyekotlin.utils
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import android.widget.ImageView
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -50,6 +51,7 @@ class ImageLoadUtils {
         fun downloadOnly(context: Context, url: String): FutureTarget<Drawable> {
             return GlideApp.with(context)
                     .load(url)
+                    .error(ContextCompat.getDrawable(context, R.mipmap.ic_empty_picture))
                     .submit()
         }
     }

@@ -56,14 +56,13 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animation?) {
                 // 扩展函数, 启动界面
-                newIntent<MainActivity>()
+                newIntent<Main>()
                 finish()
             }
 
             override fun onAnimationStart(animation: Animation?) {
             }
         })
-
     }
 
     /**

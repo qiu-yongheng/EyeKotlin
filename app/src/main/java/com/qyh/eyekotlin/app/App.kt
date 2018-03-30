@@ -1,6 +1,7 @@
 package com.qyh.eyekotlin.app
 
 import android.app.Application
+import com.blankj.utilcode.util.Utils
 import com.qyh.eyekotlin.network.RetrofitClient
 import com.qyh.eyekotlin.network.api.ApiService
 import zlc.season.rxdownload3.core.DownloadConfig
@@ -22,6 +23,7 @@ class App : Application() {
 
         initDownload()
         initRetrofit()
+        initUtils()
 
     }
 
@@ -47,5 +49,9 @@ class App : Application() {
 
     private fun initRetrofit() {
         RetrofitClient.init(this, ApiService.BASE_URL)
+    }
+
+    private fun initUtils() {
+        Utils.init(this)
     }
 }

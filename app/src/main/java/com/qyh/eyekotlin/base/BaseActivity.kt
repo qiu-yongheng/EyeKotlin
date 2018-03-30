@@ -1,9 +1,9 @@
 package com.qyh.eyekotlin.base
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.gyf.barlibrary.ImmersionBar
+import me.yokeyword.fragmentation.SupportActivity
 
 /**
  * @author 邱永恒
@@ -13,7 +13,7 @@ import com.gyf.barlibrary.ImmersionBar
  * @desc ${TODD}
  *
  */
-open class BaseActivity : AppCompatActivity(){
+open class BaseActivity : SupportActivity(){
     open val TAG = this.javaClass.name
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

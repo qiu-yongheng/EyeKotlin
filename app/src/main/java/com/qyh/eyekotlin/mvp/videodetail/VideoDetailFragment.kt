@@ -37,16 +37,22 @@ class VideoDetailFragment : BaseBackFragment() {
         const val VIDEO_DATA = "video_data"
         // 本地缓存地址
         const val LOCAL_PATH = "local_path"
+
+        fun newInstance(bundle: Bundle): VideoDetailFragment {
+            val fragment = VideoDetailFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     /**
      * 视频数据
      */
-    private val videoBean by lazy { intent.extras.getParcelable<VideoBean>(VIDEO_DATA) }
+    private val videoBean by lazy { arguments?.getParcelable<VideoBean>(VIDEO_DATA) }
     /**
      * 本地缓存地址(可能为空)
      */
-    private val localPath by lazy { intent.extras.getString(LOCAL_PATH) }
+    private val localPath by lazy { arguments?.getString(LOCAL_PATH) }
     /**
      * 封面图片
      */

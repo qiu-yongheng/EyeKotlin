@@ -119,7 +119,8 @@ class HomeFragment : SupportFragment(), HomeContract.View {
             context?.savePlayUrl(videoBean)
             val bundle = Bundle()
             bundle.putParcelable(VideoDetailFragment.VIDEO_DATA, videoBean)
-            (parentFragment as MainFragment).start(MsgFragment.newInstance(mAdapter.getMsg(position)))
+            // 与MainFragment同级
+            (parentFragment as MainFragment).start(VideoDetailFragment.newInstance(bundle))
         }
     }
 

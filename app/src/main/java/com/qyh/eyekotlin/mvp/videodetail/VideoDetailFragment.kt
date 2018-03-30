@@ -5,12 +5,12 @@ import android.content.res.Configuration
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.qyh.eyekotlin.R
+import com.qyh.eyekotlin.base.BaseBackFragment
 import com.qyh.eyekotlin.model.bean.VideoBean
 import com.qyh.eyekotlin.utils.*
 import com.qyh.eyekotlin.utils.helper.PermissionHelper
@@ -31,7 +31,7 @@ import java.lang.ref.WeakReference
  *
  */
 
-class VideoDetailActivity : AppCompatActivity() {
+class VideoDetailFragment : BaseBackFragment() {
     companion object {
         val MSG_IMAGE_LOADED = 101
         const val VIDEO_DATA = "video_data"
@@ -120,8 +120,8 @@ class VideoDetailActivity : AppCompatActivity() {
                                 },
                                 {
                                     // 下载成功, 缓存视频链接, 用来判断是否下载过
-                                    SPUtils.getInstance(this@VideoDetailActivity, "downloads").put(playUrl, playUrl)
-                                    SPUtils.getInstance(this@VideoDetailActivity, "download_state").put(playUrl, true)
+                                    SPUtils.getInstance(this@VideoDetailFragment, "downloads").put(playUrl, playUrl)
+                                    SPUtils.getInstance(this@VideoDetailFragment, "download_state").put(playUrl, true)
                                 })
                 RxDownload.start(playUrl).subscribe()
             }

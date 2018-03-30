@@ -1,15 +1,17 @@
 package com.qyh.eyekotlin.mvp.mine
 
-import android.content.Intent
 import android.graphics.Typeface
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.qyh.eyekotlin.R
-import com.qyh.eyekotlin.base.BaseFragment
 import com.qyh.eyekotlin.mvp.mine.advise.AdviseActivity
 import com.qyh.eyekotlin.mvp.mine.cache.CacheActivity
 import com.qyh.eyekotlin.mvp.mine.watch.WatchActivity
 import com.qyh.eyekotlin.utils.newIntent
 import kotlinx.android.synthetic.main.fragment_mine.*
+import me.yokeyword.fragmentation.SupportFragment
 
 /**
  * @author 邱永恒
@@ -19,12 +21,17 @@ import kotlinx.android.synthetic.main.fragment_mine.*
  * @desc ${TODD}
  *
  */
-class MineFragment : BaseFragment(), View.OnClickListener {
-    override fun getLayoutResources(): Int {
-        return R.layout.fragment_mine
+class MineFragment : SupportFragment(), View.OnClickListener {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_mine, container, false)
     }
 
-    override fun initView() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    fun initView() {
         tv_advise.setOnClickListener(this)
         tv_watch.setOnClickListener(this)
         tv_save.setOnClickListener(this)

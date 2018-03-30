@@ -37,73 +37,20 @@
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/rg_root"
+        android:layout_above="@id/bottom_bar"
         android:layout_below="@id/toolbar">
     </FrameLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_above="@+id/rg_root"
+        android:layout_above="@+id/bottom_bar"
         android:background="@color/gray"/>
 
-    <RadioGroup
-        android:id="@+id/rg_root"
+    <com.qyh.eyekotlin.view.BottomBar
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <RadioButton
-            android:id="@+id/rb_home"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/home_bg_selected"
-            android:gravity="center"
-            android:text="首页"
-            android:textColor="@color/gray"
-            android:textSize="10sp"/>
-
-        <RadioButton
-            android:id="@+id/rb_find"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/find_bg_selected"
-            android:gravity="center"
-            android:text="发现"
-            android:textColor="@color/gray"
-            android:textSize="10sp"
-            />
-
-        <RadioButton
-            android:id="@+id/rb_hot"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/hot_bg_selected"
-            android:gravity="center"
-            android:text="热门"
-            android:textColor="@color/gray"
-            android:textSize="10sp"/>
-
-        <RadioButton
-            android:id="@+id/rb_mine"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/mine_bg_selected"
-            android:gravity="center"
-            android:text="我的"
-            android:textColor="@color/gray"
-            android:textSize="10sp"/>
-    </RadioGroup>
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

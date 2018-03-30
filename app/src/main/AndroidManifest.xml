@@ -24,14 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!--<activity-->
-            <!--android:name=".ui.SplashActivity"-->
-            <!--android:launchMode="singleTask"/>-->
         <activity
-            android:name=".ui.Main"
+            android:name=".MainActivity"
             android:launchMode="singleTask"/>
         <activity
-            android:name=".mvp.videodetail.VideoDetailActivity"
+            android:name=".mvp.videodetail.VideoDetailFragment"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

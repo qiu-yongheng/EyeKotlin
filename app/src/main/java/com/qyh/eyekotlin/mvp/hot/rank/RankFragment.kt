@@ -1,6 +1,5 @@
 package com.qyh.eyekotlin.mvp.hot.rank
 
-import android.content.ClipData.newIntent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -12,7 +11,7 @@ import com.qyh.eyekotlin.adapter.FindDetailAdapter
 import com.qyh.eyekotlin.model.bean.Data
 import com.qyh.eyekotlin.model.bean.HotBean
 import com.qyh.eyekotlin.model.bean.VideoBean
-import com.qyh.eyekotlin.mvp.videodetail.VideoDetailActivity
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment
 import com.qyh.eyekotlin.utils.newIntent
 import com.qyh.eyekotlin.utils.savePlayUrl
 import com.qyh.eyekotlin.utils.showToast
@@ -57,8 +56,8 @@ class RankFragment : Fragment(), RankContract.View {
             val videoBean = VideoBean(item.cover.feed, item.title, item.description, item.duration.toLong(), item.playUrl, item.category, item.cover.blurred, item.consumption.collectionCount, item.consumption.shareCount, item.consumption.replyCount, System.currentTimeMillis())
             context?.savePlayUrl(videoBean)
             val bundle = Bundle()
-            bundle.putParcelable(VideoDetailActivity.VIDEO_DATA, videoBean)
-            activity?.newIntent<VideoDetailActivity>(bundle)
+            bundle.putParcelable(VideoDetailFragment.VIDEO_DATA, videoBean)
+            activity?.newIntent<VideoDetailFragment>(bundle)
         }
     }
 

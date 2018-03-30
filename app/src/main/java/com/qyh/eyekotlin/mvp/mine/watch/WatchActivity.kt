@@ -2,18 +2,14 @@ package com.qyh.eyekotlin.mvp.mine.watch
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.qyh.eyekotlin.R
-import com.qyh.eyekotlin.adapter.FindDetailAdapter
 import com.qyh.eyekotlin.adapter.WatchAdapter
 import com.qyh.eyekotlin.base.BaseActivity
-import com.qyh.eyekotlin.model.bean.Data
 import com.qyh.eyekotlin.model.bean.VideoBean
-import com.qyh.eyekotlin.mvp.videodetail.VideoDetailActivity
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment
 import com.qyh.eyekotlin.utils.newIntent
-import com.qyh.eyekotlin.utils.savePlayUrl
 import kotlinx.android.synthetic.main.activity_watch.*
 import java.lang.ref.WeakReference
 
@@ -67,8 +63,8 @@ class WatchActivity : BaseActivity() {
         adapter.setOnItemClickListener { adapter, view, position ->
             val item = this.adapter.data[position]
             val bundle = Bundle()
-            bundle.putParcelable(VideoDetailActivity.VIDEO_DATA, item)
-            newIntent<VideoDetailActivity>(bundle)
+            bundle.putParcelable(VideoDetailFragment.VIDEO_DATA, item)
+            newIntent<VideoDetailFragment>(bundle)
         }
     }
 }

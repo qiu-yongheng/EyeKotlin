@@ -7,19 +7,23 @@
 
 # 界面设计
 欢迎页 | 首页
--- | -- | --
+-- | --
 ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_1.png) | ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_2.png)
 
 发现 | 排行
 -- | --
 ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_3.png) | ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_4.png)
 
-视频详情 | 视频播放
--- | --
-![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_5.png) | ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_6.png)
+视频详情 |
+-- |
+![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_5.png) |
+
+视频播放 |
+-- |
+![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_6.png) |
 
 # 逻辑图
-![](./image/uml.png)
+![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/uml.png)
 
 # Kotlin的优点
 ### 简介

@@ -81,10 +81,15 @@ class VideoDetailFragment : BaseBackFragment() {
         return attachToSwipeBack(inflater.inflate(R.layout.fragment_video_detail, container, false))
     }
 
-    override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
-        super.onEnterAnimationEnd(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
         initListener()
+
+    }
+
+    override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
+        super.onEnterAnimationEnd(savedInstanceState)
         prepareVideo()
     }
 

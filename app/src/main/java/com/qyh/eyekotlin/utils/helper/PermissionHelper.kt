@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.PermissionUtils
 /**
  * @author 邱永恒
  *
- * @time 2018/3/30  8:48
+ * @playDuration 2018/3/30  8:48
  *
  * @desc 权限帮助类
  *

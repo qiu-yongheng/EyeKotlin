@@ -10,7 +10,7 @@ import android.view.animation.DecelerateInterpolator
 /**
  * @author 邱永恒
  *
- * @time 2018/3/27  15:44
+ * @playDuration 2018/3/27  15:44
  *
  * @desc 圆形揭示动画
  *

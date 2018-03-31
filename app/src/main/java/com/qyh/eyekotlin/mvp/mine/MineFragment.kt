@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.qyh.eyekotlin.R
-import com.qyh.eyekotlin.mvp.mine.advise.AdviseActivity
-import com.qyh.eyekotlin.mvp.mine.cache.CacheActivity
-import com.qyh.eyekotlin.mvp.mine.watch.WatchActivity
+import com.qyh.eyekotlin.mvp.mine.advise.AdviseFragment
+import com.qyh.eyekotlin.mvp.mine.cache.CacheFragment
+import com.qyh.eyekotlin.mvp.mine.watch.WatchFragment
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment
+import com.qyh.eyekotlin.ui.MainFragment
 import com.qyh.eyekotlin.utils.newIntent
 import kotlinx.android.synthetic.main.fragment_mine.*
 import me.yokeyword.fragmentation.SupportFragment
@@ -16,7 +18,7 @@ import me.yokeyword.fragmentation.SupportFragment
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  15:57
+ * @playDuration 2018/2/25  15:57
  *
  * @desc ${TODD}
  *
@@ -44,15 +46,15 @@ class MineFragment : SupportFragment(), View.OnClickListener {
         when (v?.id) {
             R.id.tv_watch -> {
                 // 观看记录
-                activity?.newIntent<WatchActivity>()
+                (parentFragment as MainFragment).start(WatchFragment())
             }
             R.id.tv_advise -> {
                 // 了解作者
-                activity?.newIntent<AdviseActivity>()
+                (parentFragment as MainFragment).start(AdviseFragment())
             }
             R.id.tv_save -> {
                 // 缓存记录
-                activity?.newIntent<CacheActivity>()
+                (parentFragment as MainFragment).start(CacheFragment())
             }
         }
     }

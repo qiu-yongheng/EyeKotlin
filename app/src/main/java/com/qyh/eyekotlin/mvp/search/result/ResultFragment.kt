@@ -1,37 +1,43 @@
 package com.qyh.eyekotlin.mvp.search.result
 
+import android.content.ClipData.newIntent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.qyh.eyekotlin.MainActivity
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.adapter.FeedAdapter
+import com.qyh.eyekotlin.base.BaseBackFragment
 import com.qyh.eyekotlin.model.bean.Data
 import com.qyh.eyekotlin.model.bean.HotBean
 import com.qyh.eyekotlin.model.bean.VideoBean
 import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment
 import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment.Companion.VIDEO_DATA
-import com.qyh.eyekotlin.utils.newIntent
+import com.qyh.eyekotlin.ui.MainFragment
 import com.qyh.eyekotlin.utils.savePlayUrl
 import com.qyh.eyekotlin.utils.showToast
-import kotlinx.android.synthetic.main.activity_result.*
+import kotlinx.android.synthetic.main.fragment_result.*
 
 
 /**
  * @author 邱永恒
  *
- * @time 2018/3/28  9:59
+ * @playDuration 2018/3/28  9:59
  *
  * @desc ${TODD}
  *
  */
 
-class ResultActivity : AppCompatActivity(), ResultContract.View {
+class ResultFragment : BaseBackFragment(), ResultContract.View {
     /**
      * 搜索关键字
      */
-    private val keyWord: String by lazy { intent.extras.getString(RESULT_QUERY) }
-    private val presenter: ResultContract.Presenter by lazy { ResultPresenter(this, this) }
+    private val keyWord: String by lazy { arguments!!.getString(RESULT_QUERY) }
+    private val presenter: ResultContract.Presenter by lazy { ResultPresenter(context!!, this) }
     /**
      * 请求数据个数
      */
@@ -52,31 +58,40 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
 
     companion object {
         const val RESULT_QUERY = "keyWord"
+        fun newInstance(bundle: Bundle) : ResultFragment{
+            val fragment = ResultFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_result)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_result, container, false))
+    }
 
+    override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
+        super.onEnterAnimationEnd(savedInstanceState)
         initView()
         initListener()
         presenter.requestData(keyWord, start)
     }
 
     private fun initView() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = "'$keyWord' 相关"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val mainActivity = activity as MainActivity
+        mainActivity.setSupportActionBar(toolbar)
+        mainActivity.supportActionBar?.title = "'$keyWord' 相关"
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recycler_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler_view.adapter = adapter
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
     }
 
     private fun initListener() {
         /**
          * 返回键
          */
-        toolbar.setNavigationOnClickListener { onBackPressed() }
+        toolbar.setNavigationOnClickListener { _mActivity.onBackPressed() }
         /**
          * 刷新
          */
@@ -122,10 +137,10 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
         adapter.setOnItemClickListener { adapter, view, position ->
             val item = this.adapter.data[position]
             val videoBean = VideoBean(item.cover.feed, item.title, item.description, item.duration.toLong(), item.playUrl, item.category, item.cover.blurred, item.consumption.collectionCount, item.consumption.shareCount, item.consumption.replyCount, System.currentTimeMillis())
-            savePlayUrl(videoBean)
+            context?.savePlayUrl(videoBean)
             val bundle = Bundle()
             bundle.putParcelable(VIDEO_DATA, videoBean)
-            newIntent<VideoDetailFragment>(bundle)
+            (parentFragment as MainFragment).start(VideoDetailFragment.newInstance(bundle))
         }
     }
 
@@ -148,6 +163,6 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
     }
 
     override fun showError(error: String) {
-        showToast(error)
+        context?.showToast(error)
     }
 }

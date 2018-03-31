@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * @author 邱永恒
  *
- * @time 2018/2/16  15:44
+ * @playDuration 2018/2/16  15:44
  *
  * @desc 函数扩展
  *

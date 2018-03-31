@@ -6,7 +6,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment
 /**
  * @author 邱永恒
  *
- * @time 2018/3/30  16:44
+ * @playDuration 2018/3/30  16:44
  *
  * @desc ${TODD}
  *

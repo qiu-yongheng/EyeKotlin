@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.base.BaseBackFragment
@@ -18,14 +20,16 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.activity_video_detail.*
+import kotlinx.android.synthetic.main.fragment_video_detail.*
 import zlc.season.rxdownload3.RxDownload
 import java.lang.ref.WeakReference
+
+
 
 /**
  * @author 邱永恒
  *
- * @time 2018/2/26  8:45
+ * @playDuration 2018/2/26  8:45
  *
  * @desc 视频播放界面
  *
@@ -56,7 +60,7 @@ class VideoDetailFragment : BaseBackFragment() {
     /**
      * 封面图片
      */
-    private val imageView by lazy { ImageView(this) }
+    private val imageView by lazy { ImageView(context) }
     /**
      * 设置旋转
      */
@@ -73,9 +77,12 @@ class VideoDetailFragment : BaseBackFragment() {
         true
     })
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video_detail)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_video_detail, container, false))
+    }
+
+    override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
+        super.onEnterAnimationEnd(savedInstanceState)
         initView()
         initListener()
         prepareVideo()
@@ -83,26 +90,26 @@ class VideoDetailFragment : BaseBackFragment() {
 
     @SuppressLint("SetTextI18n")
     private fun initView() {
-        videoBean.blurred?.let { ImageLoadUtils.displayHigh(this, iv_bottom_bg, it) }
-        tv_video_desc.text = videoBean.desc
-        tv_video_desc.typeface = Typeface.createFromAsset(this.assets, "fonts/FZLanTingHeiS-DB1-GB-Regular.TTF")
-        tv_video_title.text = videoBean.title
-        tv_video_title.typeface = Typeface.createFromAsset(this.assets, "fonts/FZLanTingHeiS-L-GB-Regular.TTF")
-        tv_video_time.text = "${videoBean.category}/${TransformUtils.time(videoBean.duration?.toInt()!!)}"
-        tv_video_favor.text = videoBean.collect?.toString()
-        tv_video_share.text = videoBean.share?.toString()
-        tv_video_reply.text = videoBean.reply?.toString()
+        videoBean?.blurred?.let { ImageLoadUtils.displayHigh(context!!, iv_bottom_bg, it) }
+        tv_video_desc.text = videoBean?.desc
+        tv_video_desc.typeface = Typeface.createFromAsset(context?.assets, "fonts/FZLanTingHeiS-DB1-GB-Regular.TTF")
+        tv_video_title.text = videoBean?.title
+        tv_video_title.typeface = Typeface.createFromAsset(context?.assets, "fonts/FZLanTingHeiS-L-GB-Regular.TTF")
+        tv_video_time.text = "${videoBean?.category}/${TransformUtils.playDuration(videoBean?.duration?.toInt()!!)}"
+        tv_video_favor.text = videoBean?.collect?.toString()
+        tv_video_share.text = videoBean?.share?.toString()
+        tv_video_reply.text = videoBean?.reply?.toString()
     }
 
 
     private fun initListener() {
         tv_video_download.setOnClickListener {
-            val playUrl = videoBean.playUrl?.let { SPUtils.getInstance(this, "downloads").getString(it) }
+            val playUrl = videoBean?.playUrl?.let { SPUtils.getInstance(context!!, "downloads").getString(it) }
             if (TextUtils.isEmpty(playUrl)) {
-                saveDownloadUrl(videoBean)
-                addMission(videoBean.playUrl)
+                context?.saveDownloadUrl(videoBean!!)
+                addMission(videoBean?.playUrl)
             } else {
-                showToast("该视频已经缓存过了")
+                context?.showToast("该视频已经缓存过了")
             }
         }
     }
@@ -122,12 +129,12 @@ class VideoDetailFragment : BaseBackFragment() {
                                 { error ->
                                     error.printStackTrace()
                                     Log.d("下载失败", "下载失败")
-                                    showToast("下载失败, 请重试")
+                                    context?.showToast("下载失败, 请重试")
                                 },
                                 {
                                     // 下载成功, 缓存视频链接, 用来判断是否下载过
-                                    SPUtils.getInstance(this@VideoDetailFragment, "downloads").put(playUrl, playUrl)
-                                    SPUtils.getInstance(this@VideoDetailFragment, "download_state").put(playUrl, true)
+                                    SPUtils.getInstance(context!!, "downloads").put(playUrl, playUrl)
+                                    SPUtils.getInstance(context!!, "download_state").put(playUrl, true)
                                 })
                 RxDownload.start(playUrl).subscribe()
             }
@@ -140,22 +147,22 @@ class VideoDetailFragment : BaseBackFragment() {
     private fun prepareVideo() {
         if (TextUtils.isEmpty(localPath)) {
             // 在线播放
-            gsy_player.setUp(videoBean.playUrl, false, null, videoBean.title)
+            gsy_player.setUp(videoBean?.playUrl, false, null, videoBean?.title)
         } else {
             // 播放缓存
             //Log.d(TAG, "离线缓存路径: $localPath")
-            gsy_player.setUp(localPath, false, null, videoBean.title)
+            gsy_player.setUp(localPath, false, null, videoBean?.title)
         }
 
         // 封面图片
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-        ImageViewAsyncTask(handler, WeakReference(this), WeakReference(imageView)).execute(videoBean.feed)
+        ImageViewAsyncTask(handler, WeakReference(context!!), WeakReference(imageView)).execute(videoBean?.feed)
         // 显示标题
         gsy_player.titleTextView.visibility = View.VISIBLE
         // 设置返回键
         gsy_player.backButton.visibility = View.VISIBLE
         // 设置旋转
-        orientationUtils = OrientationUtils(this, gsy_player)
+        orientationUtils = OrientationUtils(activity, gsy_player)
         //初始化不打开外部的旋转
         orientationUtils.isEnable = false
         // 是否可以滑动调整
@@ -168,7 +175,7 @@ class VideoDetailFragment : BaseBackFragment() {
         // 设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
         gsy_player.fullscreenButton.setOnClickListener {
             orientationUtils.resolveByClick()
-            gsy_player.startWindowFullscreen(this, true, true)
+            gsy_player.startWindowFullscreen(context, true, true)
         }
         gsy_player.setVideoAllCallBack(object : GSYSampleCallBack() {
             override fun onPrepared(url: String?, vararg objects: Any?) {
@@ -188,7 +195,7 @@ class VideoDetailFragment : BaseBackFragment() {
             orientationUtils.isEnable = !lock
         }
         // 设置返回键功能
-        gsy_player.backButton.setOnClickListener { onBackPressed() }
+        gsy_player.backButton.setOnClickListener { _mActivity.onBackPressed() }
     }
 
     override fun onPause() {
@@ -210,16 +217,17 @@ class VideoDetailFragment : BaseBackFragment() {
         super.onConfigurationChanged(newConfig)
         //如果旋转了就全屏
         if (isPlay) {
-            gsy_player.onConfigurationChanged(this, newConfig, orientationUtils, true, true)
+            gsy_player.onConfigurationChanged(activity, newConfig, orientationUtils, true, true)
         }
     }
 
-    override fun onBackPressed() {
+    override fun onBackPressedSupport(): Boolean {
         orientationUtils.backToProtVideo()
-        if (GSYVideoManager.backFromWindowFull(this)) {
-            return
+        if (GSYVideoManager.backFromWindowFull(context)) {
+            // 消费事件, 不向上传递
+            return true
         }
-        super.onBackPressed()
+        return super.onBackPressedSupport()
     }
 
 }

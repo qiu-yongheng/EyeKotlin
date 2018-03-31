@@ -7,7 +7,7 @@ import android.widget.EditText
 /**
  * @author 邱永恒
  *
- * @time 2018/3/27  16:11
+ * @playDuration 2018/3/27  16:11
  *
  * @desc 显示隐藏键盘工具类
  *

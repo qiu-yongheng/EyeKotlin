@@ -9,8 +9,9 @@ import android.view.*
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.adapter.HotAdapter
-import com.qyh.eyekotlin.mvp.search.result.ResultActivity
-import com.qyh.eyekotlin.mvp.search.result.ResultActivity.Companion.RESULT_QUERY
+import com.qyh.eyekotlin.mvp.search.result.ResultFragment
+import com.qyh.eyekotlin.mvp.search.result.ResultFragment.Companion.RESULT_QUERY
+import com.qyh.eyekotlin.ui.MainFragment
 import com.qyh.eyekotlin.utils.KeyBoardUtils
 import com.qyh.eyekotlin.utils.newIntent
 import com.qyh.eyekotlin.utils.showToast
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_show.*
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  15:58
+ * @playDuration 2018/2/25  15:58
  *
  * @desc 搜索界面, 执行圆形揭示动画
  *
@@ -89,7 +90,7 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, Dialog
             val keyWord = this.adapter.data[position]
             val bundle = Bundle()
             bundle.putString(RESULT_QUERY, keyWord)
-            activity?.newIntent<ResultActivity>(bundle)
+            (parentFragment as MainFragment).start(ResultFragment.newInstance(bundle))
             hideAnim()
         }
     }
@@ -140,7 +141,7 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, Dialog
             val keyWord = et_search_keyword.text.toString().trim()
             val bundle = Bundle()
             bundle.putString(RESULT_QUERY, keyWord)
-            activity?.newIntent<ResultActivity>(bundle)
+            (parentFragment as MainFragment).start(ResultFragment.newInstance(bundle))
         }
     }
 

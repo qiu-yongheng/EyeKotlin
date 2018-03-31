@@ -14,14 +14,12 @@ import me.yokeyword.fragmentation.SupportFragment
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  15:57
+ * @playDuration 2018/2/25  15:57
  *
- * @desc ${TODD}
+ * @desc 热点
  *
  */
 class HotFragment : SupportFragment() {
-
-
     private val tabList by lazy { arrayOf("周排行", "月排行", "总排行") }
     private val strategyList by lazy { arrayOf("weekly", "monthly", "historical") }
     private val fragments by lazy { ArrayList<Fragment>() }
@@ -37,7 +35,7 @@ class HotFragment : SupportFragment() {
 
     fun initView() {
         initFragments()
-        view_pager.adapter = HotPagerAdapter(fragmentManager!!, fragments, tabList)
+        view_pager.adapter = HotPagerAdapter(childFragmentManager, fragments, tabList)
         tab_layout.setupWithViewPager(view_pager)
     }
 

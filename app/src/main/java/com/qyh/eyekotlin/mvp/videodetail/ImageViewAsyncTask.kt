@@ -1,5 +1,6 @@
 package com.qyh.eyekotlin.mvp.videodetail
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Handler
@@ -11,18 +12,18 @@ import java.lang.ref.WeakReference
 /**
  * @author 邱永恒
  *
- * @time 2018/3/28  17:13
+ * @playDuration 2018/3/28  17:13
  *
  * @desc 下载封面图片
  *
  */
-class ImageViewAsyncTask(val handler: Handler, val fragment: WeakReference<VideoDetailFragment>, val imageview: WeakReference<ImageView>) : AsyncTask<String, Void, Drawable>() {
+class ImageViewAsyncTask(val handler: Handler, val context: WeakReference<Context>, val imageview: WeakReference<ImageView>) : AsyncTask<String, Void, Drawable>() {
 
     /**
      * 在后台下载图片, 并返回drawable对象
      */
     override fun doInBackground(vararg params: String?): Drawable {
-        val futureTarget = ImageLoadUtils.downloadOnly(fragment.get()!!, params[0]!!)
+        val futureTarget = ImageLoadUtils.downloadOnly(context.get()!!, params[0]!!)
 
         return futureTarget.get()
     }

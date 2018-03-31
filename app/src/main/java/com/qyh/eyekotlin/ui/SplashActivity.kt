@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
 /**
  * @author 邱永恒
  *
- * @time 2018/2/16  15:38
+ * @playDuration 2018/2/16  15:38
  *
  * @desc 欢迎页
  *
@@ -39,7 +39,7 @@ class SplashActivity : AppCompatActivity() {
      */
     private fun setAnimator(view: View) {
         // 布局放大动画
-        view.animate().scaleX(1.02f).scaleY(1.02f).duration = 2000
+        view.animate().scaleX(1.05f).scaleY(1.05f).duration = 2000
 
         // logo渐变动画
         val alphaAnimation = AlphaAnimation(0.1f, 1.0f)

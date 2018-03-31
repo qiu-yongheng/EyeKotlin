@@ -8,7 +8,7 @@ import io.reactivex.disposables.CompositeDisposable
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  11:22
+ * @playDuration 2018/2/25  11:22
  *
  * @desc ${TODD}
  *

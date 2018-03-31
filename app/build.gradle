@@ -52,8 +52,6 @@ dependencies {
     compile 'zlc.season:rxdownload3:1.2.2'
     // FlexBox
     compile 'com.google.android:flexbox:0.3.2'
-    // 沉浸式状态栏
-    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
     // 视屏播放
     compile ('com.shuyu:GSYVideoPlayer:4.1.0') {
         exclude group: 'com.android.support', module: 'support-v4'

@@ -11,7 +11,7 @@ import com.qyh.eyekotlin.utils.TransformUtils
 /**
  * @author 邱永恒
  *
- * @time 2018/3/28  10:38
+ * @playDuration 2018/3/28  10:38
  *
  * @desc ${TODD}
  *
@@ -21,6 +21,6 @@ class FeedAdapter(layoutResId: Int, data: MutableList<Data>) : BaseQuickAdapter<
         val ivPhoto = helper.getView<ImageView>(R.id.iv_photo)
         ImageLoadUtils.display(mContext, ivPhoto, item.cover.feed)
         helper.setText(R.id.tv_title, item.title)
-                .setText(R.id.tv_detail, "${item.category} / ${TransformUtils.time(item.duration)} / ${TransformUtils.date(item.date)}")
+                .setText(R.id.tv_detail, "${item.category} / ${TransformUtils.playDuration(item.duration)} / ${TransformUtils.formatDate(item.date)}")
     }
 }

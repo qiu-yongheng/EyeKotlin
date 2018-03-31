@@ -7,7 +7,7 @@ import com.qyh.eyekotlin.model.bean.HomeBean
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  11:05
+ * @playDuration 2018/2/25  11:05
  *
  * @desc ${TODD}
  *

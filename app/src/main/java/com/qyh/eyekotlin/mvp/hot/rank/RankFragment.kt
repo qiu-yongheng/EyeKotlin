@@ -6,17 +6,21 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.adapter.FindDetailAdapter
 import com.qyh.eyekotlin.model.bean.Data
 import com.qyh.eyekotlin.model.bean.HotBean
 import com.qyh.eyekotlin.model.bean.VideoBean
+import com.qyh.eyekotlin.mvp.hot.HotFragment
 import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment
+import com.qyh.eyekotlin.ui.MainFragment
 import com.qyh.eyekotlin.utils.newIntent
 import com.qyh.eyekotlin.utils.savePlayUrl
 import com.qyh.eyekotlin.utils.showToast
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_rank.*
+import me.yokeyword.fragmentation.SupportFragment
 
 /**
  * @author 邱永恒
@@ -26,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_rank.*
  * @desc ${TODD}
  *
  */
-class RankFragment : Fragment(), RankContract.View {
+class RankFragment : SupportFragment(), RankContract.View {
     companion object {
         const val RANK_STRATEGY = "rank_strategy"
     }
@@ -42,12 +46,17 @@ class RankFragment : Fragment(), RankContract.View {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initListener()
+    }
+
+    override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
+        super.onEnterAnimationEnd(savedInstanceState)
         presenter.requestData(strategy!!)
     }
 
     private fun initView() {
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
     }
 
     private fun initListener() {
@@ -57,7 +66,7 @@ class RankFragment : Fragment(), RankContract.View {
             context?.savePlayUrl(videoBean)
             val bundle = Bundle()
             bundle.putParcelable(VideoDetailFragment.VIDEO_DATA, videoBean)
-            activity?.newIntent<VideoDetailFragment>(bundle)
+            (parentFragment?.parentFragment as MainFragment).start(VideoDetailFragment.newInstance(bundle))
         }
     }
 

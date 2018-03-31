@@ -3,7 +3,7 @@ package com.qyh.eyekotlin.network.api
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  15:08
+ * @playDuration 2018/2/25  15:08
  *
  * @desc ${TODD}
  *

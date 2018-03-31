@@ -12,9 +12,9 @@
 ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_1.png)
 ### 首页
 ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_2.png)
-### 热门排行
+### 发现
 ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_3.png)
-### 搜索页
+### 热门排行
 ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_4.png)
 ### 视频详情
 ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/img_5.png)

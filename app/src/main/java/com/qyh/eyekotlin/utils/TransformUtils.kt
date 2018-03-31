@@ -7,7 +7,7 @@ import java.util.*
 /**
  * @author 邱永恒
  *
- * @time 2018/3/28  13:03
+ * @playDuration 2018/3/28  13:03
  *
  * @desc ${TODD}
  *
@@ -18,16 +18,14 @@ object TransformUtils {
     /**
      * 秒转换时间
      */
-    fun time(duration: Int): String {
-        val m = duration.div(60)
-        val s = duration % 60
-        return "${df.format(m)}'${df.format(s)}''"
+    fun playDuration(duration: Int): String {
+        return "${df.format(duration.div(60))}'${df.format(duration % 60)}''"
     }
 
     /**
      * 日期转换
      */
-    fun date(date: Long): String {
+    fun formatDate(date: Long): String {
        return dateFormat.format(date)
     }
 }

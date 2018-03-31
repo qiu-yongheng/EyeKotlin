@@ -7,7 +7,7 @@ import java.io.Serializable
 /**
  * @author 邱永恒
  *
- * @time 2018/2/26  8:49
+ * @playDuration 2018/2/26  8:49
  *
  * @desc 首页视频详情数据类
  *

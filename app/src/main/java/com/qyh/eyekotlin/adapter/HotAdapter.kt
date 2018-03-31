@@ -9,7 +9,7 @@ import com.qyh.eyekotlin.R
 /**
  * @author 邱永恒
  *
- * @time 2018/3/28  14:26
+ * @playDuration 2018/3/28  14:26
  *
  * @desc 搜索热门词
  *

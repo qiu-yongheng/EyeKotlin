@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.adapter.FindAdapter
 import com.qyh.eyekotlin.model.bean.FindBean
-import com.qyh.eyekotlin.mvp.find.detail.FindDetailActivity
-import com.qyh.eyekotlin.utils.newIntent
+import com.qyh.eyekotlin.mvp.find.detail.FindDetailFragment
+import com.qyh.eyekotlin.ui.MainFragment
 import com.qyh.eyekotlin.utils.showToast
 import com.qyh.eyekotlin.view.DividerGridItemDecoration
 import kotlinx.android.synthetic.main.fragment_find.*
@@ -20,9 +20,9 @@ import me.yokeyword.fragmentation.SupportFragment
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  15:56
+ * @playDuration 2018/2/25  15:56
  *
- * @desc ${TODD}
+ * @desc 发现
  *
  */
 class FindFragment : SupportFragment(), FindContract.View {
@@ -37,6 +37,7 @@ class FindFragment : SupportFragment(), FindContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initListener()
     }
 
     fun initView() {
@@ -44,11 +45,14 @@ class FindFragment : SupportFragment(), FindContract.View {
         recycler_view.layoutManager = GridLayoutManager(context, 2)
         recycler_view.addItemDecoration(DividerGridItemDecoration(context!!, ContextCompat.getDrawable(context!!, R.drawable.grid_divi)!!))
         recycler_view.adapter = adapter
+    }
+
+    private fun initListener() {
         adapter.setOnItemClickListener { adapter, view, position ->
             val findBean = this.adapter.data[position]
             val bundle = Bundle()
-            bundle.putString(FindDetailActivity.FIND_DETAIL_TITLE, findBean.name)
-            activity?.newIntent<FindDetailActivity>(bundle)
+            bundle.putString(FindDetailFragment.FIND_DETAIL_TITLE, findBean.name)
+            (parentFragment as MainFragment).start(FindDetailFragment.newInstance(bundle))
         }
     }
 

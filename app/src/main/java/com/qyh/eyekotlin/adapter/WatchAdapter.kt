@@ -11,7 +11,7 @@ import com.qyh.eyekotlin.utils.TransformUtils
 /**
  * @author 邱永恒
  *
- * @time 2018/3/29  22:34
+ * @playDuration 2018/3/29  22:34
  *
  * @desc ${TODO}
  *
@@ -22,6 +22,6 @@ class WatchAdapter(layoutResId: Int, data: MutableList<VideoBean>?) : BaseQuickA
         val imageView = helper?.getView<ImageView>(R.id.iv_photo)
         ImageLoadUtils.display(mContext, imageView!!, item?.feed!!)
         helper.setText(R.id.tv_title, item.title)
-                .setText(R.id.tv_time, "${item.category}/${TransformUtils.time(item.duration?.toInt()!!)}")
+                .setText(R.id.tv_time, "${item.category}/${TransformUtils.playDuration(item.duration?.toInt()!!)}")
     }
 }

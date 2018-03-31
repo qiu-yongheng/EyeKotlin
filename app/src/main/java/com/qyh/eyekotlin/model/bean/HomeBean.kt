@@ -3,7 +3,7 @@ package com.qyh.eyekotlin.model.bean
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  11:19
+ * @playDuration 2018/2/25  11:19
  *
  * @desc 首页数据类
  *

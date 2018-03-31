@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.adapter.HomeAdapter
 import com.qyh.eyekotlin.model.bean.HomeBean
@@ -22,9 +23,9 @@ import java.util.regex.Pattern
 /**
  * @author 邱永恒
  *
- * @time 2018/2/25  9:42
+ * @playDuration 2018/2/25  9:42
  *
- * @desc ${TODD}
+ * @desc 首页
  *
  */
 class HomeFragment : SupportFragment(), HomeContract.View {
@@ -78,6 +79,7 @@ class HomeFragment : SupportFragment(), HomeContract.View {
 
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
     }
 
     private fun initListener() {
@@ -112,7 +114,6 @@ class HomeFragment : SupportFragment(), HomeContract.View {
             }
         })
 
-        parentFragment
         adapter.setOnItemClickListener { adapter, view, position ->
             val item = this.adapter.data[position]
             val videoBean = VideoBean(item.data?.cover?.feed, item.data?.title, item.data?.description, item.data?.duration, item.data?.playUrl, item.data?.category, item.data?.cover?.blurred, item.data?.consumption?.collectionCount, item.data?.consumption?.shareCount, item.data?.consumption?.replyCount, System.currentTimeMillis())

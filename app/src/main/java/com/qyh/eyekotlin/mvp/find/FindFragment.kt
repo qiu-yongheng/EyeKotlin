@@ -3,15 +3,18 @@ package com.qyh.eyekotlin.mvp.find
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.adapter.FindAdapter
-import com.qyh.eyekotlin.base.BaseFragment
 import com.qyh.eyekotlin.model.bean.FindBean
 import com.qyh.eyekotlin.mvp.find.detail.FindDetailActivity
 import com.qyh.eyekotlin.utils.newIntent
 import com.qyh.eyekotlin.utils.showToast
 import com.qyh.eyekotlin.view.DividerGridItemDecoration
 import kotlinx.android.synthetic.main.fragment_find.*
+import me.yokeyword.fragmentation.SupportFragment
 
 
 /**
@@ -22,15 +25,21 @@ import kotlinx.android.synthetic.main.fragment_find.*
  * @desc ${TODD}
  *
  */
-class FindFragment : BaseFragment(), FindContract.View {
+class FindFragment : SupportFragment(), FindContract.View {
     private var list = ArrayList<FindBean>()
     private val adapter by lazy { FindAdapter(R.layout.item_find, list) }
     private val presenter by lazy { FindPresenter(context, this) }
-    override fun getLayoutResources(): Int {
-        return R.layout.fragment_find
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_find, container, false)
     }
 
-    override fun initView() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    fun initView() {
         presenter.start()
         recycler_view.layoutManager = GridLayoutManager(context, 2)
         recycler_view.addItemDecoration(DividerGridItemDecoration(context!!, ContextCompat.getDrawable(context!!, R.drawable.grid_divi)!!))

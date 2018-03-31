@@ -9,9 +9,11 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.ScaleAnimation
+import com.qyh.eyekotlin.MainActivity
 import com.qyh.eyekotlin.R
 import com.qyh.eyekotlin.utils.newIntent
 import kotlinx.android.synthetic.main.activity_splash.*
+
 /**
  * @author 邱永恒
  *
@@ -56,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animation?) {
                 // 扩展函数, 启动界面
-                newIntent<Main>()
+                newIntent<MainActivity>()
                 finish()
             }
 

@@ -9,8 +9,8 @@ import com.qyh.eyekotlin.adapter.FeedAdapter
 import com.qyh.eyekotlin.model.bean.Data
 import com.qyh.eyekotlin.model.bean.HotBean
 import com.qyh.eyekotlin.model.bean.VideoBean
-import com.qyh.eyekotlin.mvp.videodetail.VideoDetailActivity
-import com.qyh.eyekotlin.mvp.videodetail.VideoDetailActivity.Companion.VIDEO_DATA
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment.Companion.VIDEO_DATA
 import com.qyh.eyekotlin.utils.newIntent
 import com.qyh.eyekotlin.utils.savePlayUrl
 import com.qyh.eyekotlin.utils.showToast
@@ -125,7 +125,7 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
             savePlayUrl(videoBean)
             val bundle = Bundle()
             bundle.putParcelable(VIDEO_DATA, videoBean)
-            newIntent<VideoDetailActivity>(bundle)
+            newIntent<VideoDetailFragment>(bundle)
         }
     }
 

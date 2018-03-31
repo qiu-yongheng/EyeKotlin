@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Handler
 import android.widget.ImageView
-import com.qyh.eyekotlin.mvp.videodetail.VideoDetailActivity.Companion.MSG_IMAGE_LOADED
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment.Companion.MSG_IMAGE_LOADED
 import com.qyh.eyekotlin.utils.ImageLoadUtils
 import java.lang.ref.WeakReference
 
@@ -16,13 +16,13 @@ import java.lang.ref.WeakReference
  * @desc 下载封面图片
  *
  */
-class ImageViewAsyncTask(val handler: Handler, val activity: WeakReference<VideoDetailActivity>, val imageview: WeakReference<ImageView>) : AsyncTask<String, Void, Drawable>() {
+class ImageViewAsyncTask(val handler: Handler, val fragment: WeakReference<VideoDetailFragment>, val imageview: WeakReference<ImageView>) : AsyncTask<String, Void, Drawable>() {
 
     /**
      * 在后台下载图片, 并返回drawable对象
      */
     override fun doInBackground(vararg params: String?): Drawable {
-        val futureTarget = ImageLoadUtils.downloadOnly(activity.get()!!, params[0]!!)
+        val futureTarget = ImageLoadUtils.downloadOnly(fragment.get()!!, params[0]!!)
 
         return futureTarget.get()
     }

@@ -2,7 +2,7 @@ package com.qyh.eyekotlin
 
 import android.os.Bundle
 import com.qyh.eyekotlin.base.BaseActivity
-import com.qyh.eyekotlin.ui.SplashFragment
+import com.qyh.eyekotlin.ui.MainFragment
 
 /**
  * @author 邱永恒
@@ -17,8 +17,8 @@ class MainActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (findFragment(SplashFragment::class.java) == null) {
-            loadRootFragment(R.id.fl_container, SplashFragment.newInstance())
+        if (findFragment(MainFragment::class.java) == null) {
+            loadRootFragment(R.id.fl_container, MainFragment.newInstance())
         }
     }
 }

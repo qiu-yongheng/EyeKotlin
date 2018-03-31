@@ -9,7 +9,7 @@ import com.qyh.eyekotlin.adapter.WatchAdapter
 import com.qyh.eyekotlin.base.BaseActivity
 import com.qyh.eyekotlin.model.bean.VideoBean
 import com.qyh.eyekotlin.mvp.mine.watch.DataAsyncTask
-import com.qyh.eyekotlin.mvp.videodetail.VideoDetailActivity
+import com.qyh.eyekotlin.mvp.videodetail.VideoDetailFragment
 import com.qyh.eyekotlin.utils.newIntent
 import kotlinx.android.synthetic.main.activity_watch.*
 import java.lang.ref.WeakReference
@@ -64,8 +64,8 @@ class CacheActivity : BaseActivity(){
         adapter.setOnItemClickListener { adapter, view, position ->
             val item = this.adapter.data[position]
             val bundle = Bundle()
-            bundle.putParcelable(VideoDetailActivity.VIDEO_DATA, item)
-            newIntent<VideoDetailActivity>(bundle)
+            bundle.putParcelable(VideoDetailFragment.VIDEO_DATA, item)
+            newIntent<VideoDetailFragment>(bundle)
         }
     }
 }

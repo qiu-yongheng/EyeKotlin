@@ -26,16 +26,26 @@ class AdviseFragment : BaseBackFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbar()
+
+    }
+
+    override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
+        super.onEnterAnimationEnd(savedInstanceState)
+        initFragment()
     }
 
     private fun setToolbar(){
         val mainActivity = activity as MainActivity
         mainActivity.setSupportActionBar(toolbar)
         val bar = mainActivity.supportActionBar
-        bar?.title = "联系作者"
+        bar?.title = "软件详情"
         bar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             _mActivity.onBackPressed()
         }
+    }
+
+    private fun initFragment() {
+        childFragmentManager.beginTransaction().replace(R.id.info_content, InfoPreferenceFragment()).commit()
     }
 }

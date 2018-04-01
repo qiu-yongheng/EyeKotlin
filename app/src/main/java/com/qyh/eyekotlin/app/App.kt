@@ -1,6 +1,9 @@
 package com.qyh.eyekotlin.app
 
 import android.app.Application
+import android.preference.PreferenceManager
+import android.support.multidex.MultiDexApplication
+import android.support.v7.app.AppCompatDelegate
 import com.blankj.utilcode.util.Utils
 import com.qyh.eyekotlin.network.RetrofitClient
 import com.qyh.eyekotlin.network.api.ApiService
@@ -17,7 +20,7 @@ import zlc.season.rxdownload3.notification.NotificationFactoryImpl
  * @desc ${TODD}
  *
  */
-class App : Application() {
+class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
 

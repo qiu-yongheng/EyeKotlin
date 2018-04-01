@@ -1,6 +1,7 @@
 <resources>
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="preferenceTheme">@style/MaterialPreferenceTheme</item>
     </style>
 
     <!-- Activity动画 -->
@@ -47,6 +48,22 @@
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/black</item>
+    </style>
+
+    <!-- 主题切换动画 -->
+    <style name="WindowAnimationFadeInOut">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="MaterialPreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="android:fadeScrollbars">true</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbarFadeDuration">1</item>
+        <item name="android:background">@color/colorBaseBackground</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>

@@ -10,8 +10,8 @@ import com.qyh.eyekotlin.mvp.find.FindFragment
 import com.qyh.eyekotlin.mvp.home.HomeFragment
 import com.qyh.eyekotlin.mvp.hot.HotFragment
 import com.qyh.eyekotlin.mvp.mine.MineFragment
-import com.qyh.eyekotlin.mvp.search.SEARCH_TAG
 import com.qyh.eyekotlin.mvp.search.SearchFragment
+import com.qyh.eyekotlin.mvp.search.SearchFragment.Companion.SEARCH_TAG
 import com.qyh.eyekotlin.utils.CalendarUtils
 import com.qyh.eyekotlin.utils.showToast
 import com.qyh.eyekotlin.view.BottomBar
@@ -68,6 +68,7 @@ class MainFragment : SupportFragment() {
     private fun initListener() {
         iv_search.setOnClickListener {
             // SearchFragment继承DialogFragment, 像使用dialog一样使用fragment
+            searchFragment.setTargetFragment(this, 1)
             searchFragment.show(fragmentManager, SEARCH_TAG)
         }
         bottom_bar.setOnTabSelectedListener(object : BottomBar.OnTabSelectedListener {

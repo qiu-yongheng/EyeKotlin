@@ -16,6 +16,7 @@ import com.qyh.eyekotlin.utils.KeyBoardUtils
 import com.qyh.eyekotlin.utils.newIntent
 import com.qyh.eyekotlin.utils.showToast
 import com.qyh.eyekotlin.view.CircularRevealAnim
+import com.qyh.eyekotlin.view.CircularRevealAnim.Companion.DURATION
 import kotlinx.android.synthetic.main.fragment_show.*
 
 /**
@@ -26,9 +27,10 @@ import kotlinx.android.synthetic.main.fragment_show.*
  * @desc 搜索界面, 执行圆形揭示动画
  *
  */
-const val SEARCH_TAG = "SearchFragment"
-
 class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, DialogInterface.OnKeyListener, ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
+    companion object {
+        const val SEARCH_TAG = "SearchFragment"
+    }
     /**
      * 根布局
      */
@@ -90,7 +92,9 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, Dialog
             val keyWord = this.adapter.data[position]
             val bundle = Bundle()
             bundle.putString(RESULT_QUERY, keyWord)
-            (parentFragment as MainFragment).start(ResultFragment.newInstance(bundle))
+            rootView.postDelayed({
+                (targetFragment as MainFragment).start(ResultFragment.newInstance(bundle))
+            }, DURATION)
             hideAnim()
         }
     }
@@ -141,7 +145,9 @@ class SearchFragment : DialogFragment(), CircularRevealAnim.AnimListener, Dialog
             val keyWord = et_search_keyword.text.toString().trim()
             val bundle = Bundle()
             bundle.putString(RESULT_QUERY, keyWord)
-            (parentFragment as MainFragment).start(ResultFragment.newInstance(bundle))
+            rootView.postDelayed({
+                (targetFragment as MainFragment).start(ResultFragment.newInstance(bundle))
+            }, DURATION)
         }
     }
 

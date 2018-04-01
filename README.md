@@ -26,7 +26,7 @@
 ![](https://github.com/qiu-yongheng/EyeKotlin/blob/master/image/uml.png)
 
 # Kotlin的优点
-### 简介
+### 简洁
 使用一行代码创建一个包含 getters、 setters、 equals()、 hashCode()、 toString() 以及 copy() 的 POJO：
 ```
 data class Customer(val name: String, val email: String, val company: String)
@@ -42,7 +42,7 @@ object ThisIsASingleton {
 }
 ```
 
-###安全
+### 安全
 彻底告别那些烦人的 NullPointerException——著名的十亿美金的错误。
 ```
 var output: String

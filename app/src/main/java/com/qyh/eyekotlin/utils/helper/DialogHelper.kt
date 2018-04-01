@@ -1,9 +1,16 @@
 package com.qyh.eyekotlin.utils.helper
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.DialogInterface
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.PermissionUtils
+import com.qyh.eyekotlin.R
+import com.qyh.eyekotlin.utils.showToast
+import zlc.season.rxdownload3.core.DownloadConfig.context
 
 /**
  * @author 邱永恒
@@ -43,6 +50,28 @@ object DialogHelper {
                 .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, which ->
                     // 打开设置界面
                     PermissionUtils.openAppSettings()
+                })
+                .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which -> })
+                .setCancelable(false)
+                .create()
+                .show()
+    }
+
+    /**
+     * 显示赞赏弹窗
+     */
+    fun showDonateDialog() {
+        val topActivity = ActivityUtils.getTopActivity() ?: return
+        AlertDialog.Builder(topActivity)
+                .setTitle(R.string.donate)
+                .setMessage(R.string.donate_content)
+                .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, which ->
+                    // 将指定账号添加到剪切板
+                    // add the alipay account to clipboard
+                    val manager = topActivity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clipData = ClipData.newPlainText("text", topActivity.getString(R.string.donate_account))
+                    manager.primaryClip = clipData
+                    topActivity.showToast("已复制到剪贴板")
                 })
                 .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which -> })
                 .setCancelable(false)

@@ -17,7 +17,7 @@ import android.view.animation.DecelerateInterpolator
  */
 class CircularRevealAnim {
     companion object {
-        val DURATION: Long = 500
+        const val DURATION: Long = 500
     }
 
     private var mListener: AnimListener? = null

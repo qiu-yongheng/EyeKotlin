@@ -105,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="bottom|center_horizontal"
-        android:text="了解作者"
+        android:text="软件详情"
         android:textSize="14sp"/>
 
 </LinearLayout>

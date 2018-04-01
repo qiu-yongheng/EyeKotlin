@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">EyeKotlin</string>
+    <string name="settings">设置</string>
+    <string name="in_app_browser">Chrome Custom Tabs</string>
+    <string name="in_app_browser_desc">使用Chrome Custom Tabs打开链接</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="about">关于</string>
+    <string name="version">版本: V1.3.0</string>
+    <string name="author">作者</string>
+    <string name="follow_me_on_github">在Github关注我</string>
+    <string name="follow_me_on_github_desc">https://github.com/qiu-yongheng</string>
+    <string name="github_blog">个人博客</string>
+    <string name="github_blog_desc">https://qiu-yongheng.github.io/</string>
+    <string name="support">支持</string>
+    <string name="source_code">源代码</string>
+    <string name="source_code_desc">https://github.com/qiu-yongheng/EyeKotlin</string>
+    <string name="feedback">反馈Bug / 建议</string>
+    <string name="feedback_desc">帮助我改进APP</string>
+    <string name="open_source_licenses">开源许可证</string>
+    <string name="coffee">请我喝杯咖啡</string>
+    <string name="coffee_description">撸码不易，如果对你有所帮助，欢迎您的赞赏</string>
+    <string name="no_browser_found">没有找到浏览器</string>
+    <string name="sendto">mailto:yheng.qiu@gmail.com</string>
+    <string name="mail_topic">开眼使用反馈与建议</string>
+    <string name="device_model">设备型号:</string>
+    <string name="sdk_version">SDK版本:</string>
+    <string name="no_mail_app">没有安装邮件类应用</string>
+    <string name="donate">捐助开发者</string>
+    <string name="donate_content">支付宝账号将会复制到粘贴板，进入支付宝可直接粘贴完成捐赠，感谢您的支持！</string>
+    <string name="donate_account">qyh121212@163.com</string>
 </resources>

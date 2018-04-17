@@ -2,6 +2,7 @@ package com.qyh.eyekotlin.network
 
 import android.content.Context
 import android.util.Log
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.qyh.eyekotlin.network.interceptor.CacheInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -26,6 +27,8 @@ class RetrofitClient private constructor(context: Context, baseUrl: String) {
      */
     private val httpCacheDirectory: File by lazy { File(context.cacheDir, "app_cache") }
     private val cache: Cache by lazy { Cache(httpCacheDirectory, 10 * 1024 * 1024) }
+
+
     /**
      * 创建OKHTTP客户端
      * 1. 设置在线缓存路径
@@ -39,6 +42,7 @@ class RetrofitClient private constructor(context: Context, baseUrl: String) {
                 .cache(cache)
                 .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addNetworkInterceptor(CacheInterceptor(context))
+                .addNetworkInterceptor(StethoInterceptor())
                 .addInterceptor(CacheInterceptor(context))
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)

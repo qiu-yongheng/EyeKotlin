@@ -5,6 +5,7 @@ import android.preference.PreferenceManager
 import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatDelegate
 import com.blankj.utilcode.util.Utils
+import com.facebook.stetho.Stetho
 import com.qyh.eyekotlin.network.RetrofitClient
 import com.qyh.eyekotlin.network.api.ApiService
 import zlc.season.rxdownload3.core.DownloadConfig
@@ -27,7 +28,11 @@ class App : MultiDexApplication() {
         initDownload()
         initRetrofit()
         initUtils()
+        initStetho()
+    }
 
+    private fun initStetho() {
+        Stetho.initializeWithDefaults(this)
     }
 
     private fun initDownload() {

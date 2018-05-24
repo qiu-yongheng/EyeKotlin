@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.qyh.eyekotlin.R
+import com.qyh.eyekotlin.R.id.*
 import com.qyh.eyekotlin.mvp.find.FindFragment
 import com.qyh.eyekotlin.mvp.home.HomeFragment
 import com.qyh.eyekotlin.mvp.hot.HotFragment
@@ -24,7 +25,7 @@ import me.yokeyword.fragmentation.SupportFragment
  *
  * @playDuration 2018/3/30  13:42
  *
- * @desc ${TODD}
+ * @desc 根Fragment
  *
  */
 class MainFragment : SupportFragment() {

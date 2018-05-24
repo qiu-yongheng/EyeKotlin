@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatDelegate
 import com.blankj.utilcode.util.Utils
 import com.facebook.stetho.Stetho
+import com.qyh.eyekotlin.BuildConfig
 import com.qyh.eyekotlin.network.RetrofitClient
 import com.qyh.eyekotlin.network.api.ApiService
 import zlc.season.rxdownload3.core.DownloadConfig
@@ -36,7 +37,7 @@ class App : MultiDexApplication() {
     }
 
     private fun initDownload() {
-        DownloadConfig.Builder.create(this)
+        val builder = DownloadConfig.Builder.create(this)
                 //设置更新频率
                 .setFps(20)
                 //自动开始下载
@@ -53,6 +54,8 @@ class App : MultiDexApplication() {
                 .setOkHttpClientFacotry(OkHttpClientFactoryImpl())
                 //添加扩展
                 .addExtension(ApkInstallExtension::class.java)
+
+        DownloadConfig.init(builder)
     }
 
     private fun initRetrofit() {

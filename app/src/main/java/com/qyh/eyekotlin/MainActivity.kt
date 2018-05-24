@@ -17,14 +17,10 @@ class MainActivity : SupportActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // 沉浸式状态栏
-//        ImmersionBar.with(this).transparentBar().barAlpha(0.3f).fitsSystemWindows(true).init()
-        // 隐藏导航栏
-//        window.attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
         if (findFragment(MainFragment::class.java) == null) {
+            // 加载根Fragment
             loadRootFragment(R.id.fl_container, MainFragment.newInstance())
         }
     }
-
 }
